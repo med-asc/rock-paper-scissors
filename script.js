@@ -14,6 +14,9 @@ function computerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
+    // Fix player format with capitalizing first letter
+    playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1).toLowerCase()
+
     if (playerSelection == 'Paper' && computerSelection == 'Rock') {
         output = `You Win! ${playerSelection} beats ${computerSelection}`;
     }
@@ -25,12 +28,32 @@ function playRound(playerSelection, computerSelection) {
     } else if (playerSelection == computerSelection) {
         output = `Draw! ${playerSelection} and ${computerSelection}`;
     } else {
-        output = `You Lose ${computerSelection} beats ${playerSelection}`;
+        output = `You Lose! ${computerSelection} beats ${playerSelection}`;
     }
     return output
 }
 
+function game() {
+    // Set the scores to 0
+    let player = 0
+    let computer = 0
 
-const playerSelection = 'Rock'
-const computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
+    for (let i = 0; i < 5; i++) {
+        const playerSelection = prompt('Rock, Paper or Scissor?')
+        const computerSelection = computerPlay();
+
+        let round = playRound(playerSelection, computerSelection)
+        round = round.split(' ')
+        if (round[1] == 'Win!') {
+            player++
+        } else if (round[1] == 'Lose!') {
+            computer++
+        }
+        else {
+            player++
+            computer++
+        }
+        console.log(round)
+    }
+    console.log(`Player: ${player}, Computer: ${computer}`)
+}
