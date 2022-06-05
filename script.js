@@ -1,34 +1,27 @@
-function computerPlay() {
-    // Do a random roll from 0-2
-    roll = Math.floor(Math.random() * 3);
+shape = ['Rock', 'Paper', 'Scissor']
 
-    // Assign number to paper, rock or scissor
-    if (roll == 0) {
-        shape = 'Paper';
-    } else if (roll == 1) {
-        shape = 'Rock';
-    } else {
-        shape = 'Scissor';
-    }
-    return shape
+let computerPlay = () => Math.floor(Math.random() * shape.length);
+
+function getUserChoice() {
+    player = prompt('Rock, Paper or Scissor?')
+    // Fix player format by capitalizing first letter
+    player = player.charAt(0).toUpperCase() + player.slice(1).toLowerCase()
+    return shape.indexOf(player)
 }
 
 function playRound(playerSelection, computerSelection) {
-    // Fix player format with capitalizing first letter
-    playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1).toLowerCase()
+    playerShape = shape[playerSelection];
+    computerShape = shape[computerSelection];
 
-    if (playerSelection == 'Paper' && computerSelection == 'Rock') {
-        output = `You Win! ${playerSelection} beats ${computerSelection}`;
+    if (playerSelection == 0 && computerSelection == 2) {
+        output = `You Win! ${playerShape} beats ${computerShape}`;
     }
-    else if (playerSelection == 'Rock' && computerSelection == 'Scissor') {
-        output = `You Win! ${playerSelection} beats ${computerSelection}`;
-    }
-    else if (playerSelection == 'Scissor' && computerSelection == 'Paper') {
-        output = `You Win! ${playerSelection} beats ${computerSelection}`;
+    else if ((playerSelection - computerSelection) == 1) {
+        output = `You Win! ${playerShape} beats ${computerShape}`;
     } else if (playerSelection == computerSelection) {
-        output = `Draw! ${playerSelection} and ${computerSelection}`;
+        output = `Draw! ${playerShape} and ${computerShape}`;
     } else {
-        output = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        output = `You Lose! ${computerShape} beats ${playerShape}`;
     }
     return output
 }
@@ -39,14 +32,14 @@ function game() {
     let computer = 0
 
     for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('Rock, Paper or Scissor?')
+        const playerSelection = getUserChoice();
         const computerSelection = computerPlay();
 
         let round = playRound(playerSelection, computerSelection)
-        round = round.split(' ')
-        if (round[1] == 'Win!') {
+        
+        if (round.charAt(4) == 'W') {
             player++
-        } else if (round[1] == 'Lose!') {
+        } else if (round.charAt(4) == 'L') {
             computer++
         }
         else {
@@ -55,5 +48,5 @@ function game() {
         }
         console.log(round)
     }
-    console.log(`Player: ${player}, Computer: ${computer}`)
+    console.log(`Player score: ${player}, Computer score: ${computer}`)
 }
