@@ -47,11 +47,12 @@ function game() {
 }
 
 const buttons = document.querySelectorAll(".btn");
+const result = document.querySelector("#game-results");
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const playerChoice = getUserChoice(button.id);
     const game = playRound(playerChoice, computerPlay());
-    console.log(game);
+    result.textContent = game;
   });
 });
