@@ -1,5 +1,9 @@
 shape = ["Rock", "Paper", "Scissor"];
 
+// Set the scores to 0
+let player = 0;
+let computer = 0;
+
 let computerPlay = () => Math.floor(Math.random() * shape.length);
 
 function getUserChoice(choice) {
@@ -24,35 +28,40 @@ function playRound(playerSelection, computerSelection) {
   return output;
 }
 
-function game() {
-  // Set the scores to 0
-  let player = 0;
-  let computer = 0;
-
-  const playerSelection = getUserChoice();
-  const computerSelection = computerPlay();
-
-  let round = playRound(playerSelection, computerSelection);
-
-  if (round.charAt(4) == "W") {
+function updateScore(str) {
+  if (str.charAt(4) == "W") {
     player++;
-  } else if (round.charAt(4) == "L") {
+  } else if (str.charAt(4) == "L") {
     computer++;
   } else {
     player++;
     computer++;
   }
-  console.log(round);
-  console.log(`Player score: ${player}, Computer score: ${computer}`);
+  return [player, computer]
+//   console.log(`Player score: ${player}, Computer score: ${computer}`);
 }
 
 const buttons = document.querySelectorAll(".btn");
 const result = document.querySelector("#game-results");
+const pScore = document.querySelector("#player-score");
+const cScore = document.querySelector("#computer-score");
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const playerChoice = getUserChoice(button.id);
     const game = playRound(playerChoice, computerPlay());
-    result.textContent = game;
+    let score = updateScore(game);
+    pScore.textContent = score[0]
+    cScore.textContent = score[1]
+
+    if (score[0] === 5) {
+        result.textContent = "Player wins!";
+        buttons.forEach((button) => button.setAttribute("disabled", "disabled"));
+    } else if (score[1] === 5) {
+        result.textContent = "Computer wins!";
+        buttons.forEach((button) => button.setAttribute("disabled", "disabled"));
+    } else {
+        result.textContent = game;
+    }
   });
 });
