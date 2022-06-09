@@ -31,22 +31,20 @@ function game() {
     let player = 0
     let computer = 0
 
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = getUserChoice();
-        const computerSelection = computerPlay();
+    const playerSelection = getUserChoice();
+    const computerSelection = computerPlay();
 
-        let round = playRound(playerSelection, computerSelection)
-        
-        if (round.charAt(4) == 'W') {
-            player++
-        } else if (round.charAt(4) == 'L') {
-            computer++
-        }
-        else {
-            player++
-            computer++
-        }
-        console.log(round)
+    let round = playRound(playerSelection, computerSelection)
+    
+    if (round.charAt(4) == 'W') {
+        player++
+    } else if (round.charAt(4) == 'L') {
+        computer++
     }
+    else {
+        player++
+        computer++
+    }
+    console.log(round)
     console.log(`Player score: ${player}, Computer score: ${computer}`)
 }
